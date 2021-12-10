@@ -51,3 +51,14 @@ assignments = dcn_model.get_assignment(latent_x)
 ```
 
 For a more elaborated description, please refer to the example notebook.
+
+Visualize what happens during training
+========================================
+The notebook's example is inspired by the motivational example in the original paper, where ten thousand data points from four clearly distinguishable clusters are mapped into a 100-dimensional space where the clusters are not clearly distinguished anymore.
+DCN is then trained to find the latent representation and detect clusters accordingly. In our experiments, DCN was able to find meaningful clusters:
+
+![screen-gif](./example_img/dcn_example.gif)
+
+The gif shows the latent space and clustering results after 1, 11, 21, 31, 41 epochs of training. Moreover, we applied 50 epochs of pretraining before starting the actual training.
+On the left hand side, the labels as identified by DCN are displayed. On the right hand side, the "ground truth" cluster assignments are displayed. We see, that DCN and the ground truth cluster together the same points.
+Even though the clustering is reasonable after the first epoch already, DCN creates increasingly k-means-friendlier (lower k-means cluster loss) representations. 
