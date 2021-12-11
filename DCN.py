@@ -153,7 +153,7 @@ class DCN(Model):
                     if grad is not None
                 )
             if verbose:
-                print('{0} - Epoch {1} - Reconstruction loss: {2}.'.format(dt.now().strftime('%Y-%m-%d %H:%m:%S'),
+                print('{0} - Epoch {1} - Reconstruction loss: {2}.'.format(dt.now().strftime('%Y-%m-%d %H:%M:%S'),
                                                                            _epoch,
                                                                            pre_loss
                                                                            ))
@@ -170,7 +170,6 @@ class DCN(Model):
 
             # get "kmeans friendly" embedding
             x_latent = self.encoder(x)
-            # y_pred = self.decoder(x_latent)  # this happens in _loss, actually
 
             if self.centers is None:
                 # if this is the first calculation after pretraining, kmeans had not been initialized yet
@@ -180,7 +179,6 @@ class DCN(Model):
             # get assignments of points in X (closest cluster centers) to calculate cluster loss
             nearest_center_label = self.get_assignment(x_latent)
             reconstruction_loss, clustering_loss = self._loss(x, y_true, nearest_center_label)
-            # print(reconstruction_loss, clustering_loss)
             total_loss = reconstruction_loss + clustering_loss  # self._loss already uses lambda
 
         # UPDATE NETWORK PARAMS (gradient step in equation (6) in orig paper)
@@ -202,3 +200,4 @@ class DCN(Model):
         return {"loss": total_loss,
                 "recon_loss": reconstruction_loss,
                 "cluster_loss": clustering_loss}
+
